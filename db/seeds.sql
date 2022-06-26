@@ -1,11 +1,14 @@
+INSERT INTO departments (name) VALUES ('Finance');
 INSERT INTO departments (name) VALUES ('HR');
 INSERT INTO departments (name) VALUES ('IT');
 INSERT INTO departments (name) VALUES ('Marketing');
-INSERT INTO departments (name) VALUES ('Finance');
+INSERT INTO departments (name) VALUES ('Operations');
 
-INSERT INTO roles (name, salary, department_id) VALUES ('Junior Software Developer', '1000', '2');
-INSERT INTO roles (name, salary, department_id) VALUES ('Senior Software Developer', '2000', '2');
-INSERT INTO roles (name, salary, department_id) VALUES ('Tech Lead', '3000', '2');
-INSERT INTO roles (name, salary, department_id) VALUES ('Marketing Executive', '2000', '3');
-INSERT INTO roles (name, salary, department_id) VALUES ('Senior Marketing Executive', '4000', '3');
-INSERT INTO roles (name, salary, department_id) VALUES ('FInance Analyst', '7000', '4');
+INSERT INTO roles (title, salary, department_id) VALUES ('Finance Analyst', '20000', '1');
+INSERT INTO roles (title, salary, department_id) VALUES ('HR Business Partner', '25000', '2');
+INSERT INTO roles (title, salary, department_id) VALUES ('Junior Software Developer', '30000', '3');
+INSERT INTO roles (title, salary, department_id) VALUES ('Senior Software Developer', '40000', '3');
+INSERT INTO roles (title, salary, department_id) VALUES ('Tech Lead', '50000', '3');
+INSERT INTO roles (title, salary, department_id) VALUES ('Marketing Executive', '18000', '4');
+INSERT INTO roles (title, salary, department_id) VALUES ('Senior Marketing Executive', '24000', '4');
+INSERT INTO roles (title, salary, department_id) VALUES ('Operations Manager', '60000', '5');

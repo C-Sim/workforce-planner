@@ -1,14 +1,14 @@
-const getDepartments = () => {};
+const getDepartments = (db) => {};
 
-const getRoles = () => {};
+const getRoles = (db) => {};
 
-const getEmployees = () => {};
+const getEmployees = (db) => {};
 
-const getEmployeesByManager = () => {};
+const getEmployeesByManager = (db) => {};
 
-const getEmployeesByDepartment = () => {};
+const getEmployeesByDepartment = (db) => {};
 
-const getSpendByDepartment = () => {};
+const getSpendByDepartment = (db) => {};
 
 module.exports = {
   getDepartments,
