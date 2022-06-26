@@ -1,9 +1,6 @@
 const inquirer = require("inquirer");
 const figlet = require("figlet");
-const path = require("path");
-const Employee = require("./lib/Employee");
-const Department = require("./lib/Department");
-const Role = require("./lib/Role");
+
 const {
   confirmAction,
   viewOptions,

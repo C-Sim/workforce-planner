@@ -1,5 +1,9 @@
 const { getDepartments, getRoles, getEmployees } = require("./view");
 
+const Employee = require("./lib/Employee");
+const Department = require("./lib/Department");
+const Role = require("./lib/Role");
+
 
 const {
     departmentQuestions,

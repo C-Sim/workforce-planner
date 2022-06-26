@@ -6,23 +6,23 @@ const confirmAction = {
   message: "What would you like to do?",
   choices: [
     {
-      name: "View",
+      name: "OO View",
       value: "view",
     },
     {
-      name: "Add",
+      name: "+ Add",
       value: "add",
     },
     {
-      name: "Update",
+      name: "^ Update",
       value: "update",
     },
     {
-      name: "Delete",
+      name: "X Delete",
       value: "delete",
     },
     {
-      name: "I'm done",
+      name: "<- Exit",
       value: "done",
     },
   ],
