@@ -7,6 +7,9 @@ const {
   addOptions,
   updateOptions,
   deleteOptions,
+  chooseDepartment,
+  chooseRole,
+  chooseEmployee,
 } = require("./questions");
 
 const init = async () => {
@@ -35,9 +38,13 @@ const init = async () => {
       } else if (viewOption === "viewEmployees") {
         getEmployees();
       } else if (viewOption === "viewEmployeesByManager") {
-        getEmployeesByManager();
+        const manager = await inquirer.prompt(chooseManager);
+
+        getEmployeesByManager(manager);
       } else if (viewOption === "viewEmployeesByDepartment") {
-        getEmployeesByDepartment();
+        const department = await inquirer.prompt(chooseDepartment);
+
+        getEmployeesByDepartment(department);
       } else if (viewOption === "viewSpendByDepartment") {
         getSpendByDepartment();
       }
@@ -55,19 +62,31 @@ const init = async () => {
       const updateOption = await inquirer.prompt(updateOptions);
 
       if (updateOption === "updateEmployeeRole") {
-        updateEmployeeRole();
+        const employee = await inquirer.prompt(chooseEmployee);
+        const role = await inquirer.prompt(chooseRole);
+
+        updateEmployeeRole(employee, role);
       } else if (updateOption === "updateEmployeeManager") {
-        updateEmployeeManager();
+        const employee = await inquirer.prompt(chooseEmployee);
+        const manager = await inquirer.prompt(chooseManager);
+
+        updateEmployeeManager(employee, manager);
       }
     } else if (action === "delete") {
       const deleteOption = await inquirer.prompt(deleteOptions);
 
       if (deleteOption === "deleteDepartment") {
-        deleteDepartment();
+        const department = await inquirer.prompt(chooseDepartment);
+
+        deleteDepartment(department);
       } else if (deleteOption === "deleteRole") {
-        deleteRole();
+        const role = await inquirer.prompt(chooseRole);
+
+        deleteRole(role);
       } else if (deleteOption === "deleteEmployee") {
-        deleteEmployee();
+        const employee = await inquirer.prompt(chooseEmployee);
+
+        deleteEmployee(employee);
       }
     } else {
       inProgress = false;

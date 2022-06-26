@@ -1,3 +1,5 @@
+const mysql = require("mysql2/promise")
+
 const { getDepartments, getRoles, getEmployees } = require("./view");
 
 const Employee = require("../lib/Employee");
@@ -23,6 +25,9 @@ const createDepartment = () => {
     );
 
     departmentInfo.push(department);
+
+    INSERT INTO departments (name) VALUES (departmentInfo);
+
 };
 
 const createRole = () => {
@@ -35,6 +40,9 @@ const createRole = () => {
     );
 
     roleInfo.push(role);
+
+    INSERT INTO role (title, salary, department_id) VALUES (roleInfo);
+
 };
 
 const createEmployee = () => {
@@ -49,6 +57,9 @@ const createEmployee = () => {
     );
 
     employeeInfo.push(employee);
+
+    INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (employeeInfo);
+
 };
 
 
