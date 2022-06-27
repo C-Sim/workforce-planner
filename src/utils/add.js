@@ -26,7 +26,9 @@ const createDepartment = () => {
 
     departmentInfo.push(department);
 
-    INSERT INTO departments (name) VALUES (departmentInfo);
+    console.log(departmentInfo)
+
+    // INSERT INTO departments (name) VALUES (departmentInfo);
 
 };
 

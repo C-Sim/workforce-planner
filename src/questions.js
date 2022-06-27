@@ -1,12 +1,11 @@
 const chalk = require("chalk");
-const mysql = require("mysql2/promise")
+const mysql = require("mysql2/promise");
 
-const { getDepartments, getRoles, getEmployees } = require("./view");
+// const { getDepartments, getRoles, getEmployees } = require("./view");
 
-SELECT * FROM departments;
-SELECT * FROM roles;
-SELECT * FROM employees;
-
+// SELECT * FROM departments;
+// SELECT * FROM roles;
+// SELECT * FROM employees;
 
 const confirmAction = {
   name: "action",
@@ -139,107 +138,65 @@ const deleteOptions = {
 };
 
 // TODO - list choices from db - map through all retrieved?
-const chooseDepartment = {
-    name: "department",
-    type: "list",
-    message: "Which department?"
-    choices: [
-     {
-        name: departments.name,
-        id: departments.id
-     }
-    ]
-};
+// const chooseDepartment = {
+//     name: "department",
+//     type: "list",
+//     message: "Which department?"
+//     choices: [
+//      {
+//         name: departments.name,
+//         id: departments.id
+//      }
+//     ]
+// };
 
+// const chooseRole = {
+//     name: "role",
+//     type: "list",
+//     message: "Which role?"
+//     choices: [
+//      {
+//         name: roles.title,
+//         id: roles.id
+//      }
+//     ]
+// };
 
-const chooseRole = {
-    name: "role",
-    type: "list",
-    message: "Which role?"
-    choices: [
-     {
-        name: roles.title,
-        id: roles.id
-     }
-    ]
-};
+// const chooseEmployee = {
+//     name: "employee",
+//     type: "list",
+//     message: "Which employee?"
+//     choices: [
+//      {
+//         name: employee.first_name employee.last_name,
+//         id: employees.id,
+//      }
+//     ]
+// };
 
-const chooseEmployee = {
-    name: "employee",
-    type: "list",
-    message: "Which employee?"
-    choices: [
-     {
-        name: employee.first_name employee.last_name,
-        id: employees.id,
-     }
-    ]
-};
+// const chooseManager = {
+//     name: "manager",
+//     type: "list",
+//     message: "Which manager?"
+//     choices: [
+//      {
+//         name: employee.first_name employee.last_name,
+//         id: employees.manager_id,
+//      }
+//     ]
+// };
 
-const chooseManager = {
-    name: "manager",
-    type: "list",
-    message: "Which manager?"
-    choices: [
-     {
-        name: employee.first_name employee.last_name,
-        id: employees.manager_id,
-     }
-    ]
-};
-
-// TODO - correct questions
+// TODO - list choices from db - map through all retrieved?
 const departmentQuestions = [
   {
     name: "name",
     type: "input",
-    message: "What is the department's name?",
+    message: "What is the name of the department?",
     validate: (name) => {
       if (name.length > 0) {
         return true;
       } else {
-        console.log(chalk.bgRed("Please enter a name"));
-        return false;
-      }
-    },
-  },
-  {
-    name: "id",
-    type: "input",
-    message: "What is the department's employee ID number?",
-    validate: (id) => {
-      if (id.length > 0) {
-        return true;
-      } else {
-        console.log(chalk.bgRed("Please enter an employee ID"));
-        return false;
-      }
-    },
-  },
-  {
-    name: "email",
-    type: "input",
-    message: "What is the department's email address?",
-    validate: (email) => {
-      valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-
-      if (valid) {
-        return true;
-      } else {
-        console.log(chalk.bgRed("Please enter a valid email address"));
-        return false;
-      }
-    },
-  },
-  {
-    name: "gitHub",
-    type: "input",
-    message: "What is the department's GitHub username?",
-    validate: (gitHub) => {
-      if (gitHub.length > 0) {
-        return true;
-      } else {
-        console.log(chalk.bgRed("Please enter a GitHub username"));
+        console.log(chalk.bgRed("Please enter the department name"));
         return false;
       }
     },
@@ -248,11 +205,11 @@ const departmentQuestions = [
 
 const roleQuestions = [
   {
-    name: "name",
+    name: "role",
     type: "input",
-    message: "What is the role's name?",
-    validate: (name) => {
-      if (name.length > 0) {
+    message: "What is the role title?",
+    validate: (role) => {
+      if (role.length > 0) {
         return true;
       } else {
         console.log(chalk.bgRed("Please enter a name"));
@@ -261,108 +218,70 @@ const roleQuestions = [
     },
   },
   {
-    name: "id",
-    type: "input",
-    message: "What is the role's employee ID number?",
-    validate: (id) => {
-      if (id.length > 0) {
+    name: "salary",
+    type: "number",
+    message: "What is the salary for the role?",
+    validate: (salary) => {
+      if (salary.length > 0) {
         return true;
       } else {
-        console.log(chalk.bgRed("Please enter an employee ID"));
+        console.log(chalk.bgRed("Please enter a salary"));
         return false;
       }
     },
   },
   {
-    name: "email",
-    type: "input",
-    message: "What is the role's email address?",
-    validate: (email) => {
-      valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-
-      if (valid) {
-        return true;
-      } else {
-        console.log(chalk.bgRed("Please enter a valid email address"));
-        return false;
-      }
-    },
-  },
-  {
-    name: "school",
-    type: "input",
-    message: "What school does the role attend?",
-    validate: (school) => {
-      if (school.length > 0) {
-        return true;
-      } else {
-        console.log(chalk.bgRed("Please enter a school"));
-        return false;
-      }
-    },
+    name: "department",
+    type: "list",
+    message: "Which department does the role belong to?",
+    choices: [{}],
   },
 ];
 
 const employeeQuestions = [
   {
-    name: "teamName",
+    name: "firstName",
     type: "input",
-    message: "What is your team name?",
-    default: "The Team",
-  },
-  {
-    name: "name",
-    type: "input",
-    message: "What is your name?",
-    validate: (name) => {
-      if (name.length > 0) {
+    message: "What is the employee's first name?",
+    validate: (irstName) => {
+      if (firstName.length > 0) {
         return true;
       } else {
-        console.log(chalk.bgRed("Please enter your name"));
+        console.log(chalk.bgRed("Please enter the employee's first name"));
         return false;
       }
     },
   },
   {
-    name: "id",
+    name: "lastName",
     type: "input",
-    message: "What is your employee ID number?",
-    validate: (id) => {
-      if (id.length > 0) {
+    message: "What is the employee's last name?",
+    validate: (lastName) => {
+      if (lastName.length > 0) {
         return true;
       } else {
-        console.log(chalk.bgRed("Please enter your employee ID"));
+        console.log(chalk.bgRed("Please enter the employee's last name"));
         return false;
       }
     },
   },
   {
-    name: "email",
-    type: "input",
-    message: "What is your email address?",
-    validate: (email) => {
-      valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
-
-      if (valid) {
-        return true;
-      } else {
-        console.log(chalk.bgRed("Please enter a valid email address"));
-        return false;
-      }
-    },
+    name: "role",
+    type: "list",
+    message: "What is the employee's role?",
+    choices: [{}],
   },
   {
-    name: "officeNumber",
-    type: "input",
-    message: "What is your office number?",
-    validate: (officeNumber) => {
-      if (officeNumber.length > 0) {
-        return true;
-      } else {
-        console.log(chalk.bgRed("Please enter your office number"));
-        return false;
-      }
-    },
+    name: "manager",
+    type: "list",
+    message: "Who is the employee's manager?",
+    choices: [
+      {
+        name: "They do not have a manager",
+        value: "noManager",
+        short: "NM",
+      },
+    ],
   },
 ];
 
