@@ -12,6 +12,23 @@ const {
   chooseEmployee,
 } = require("./questions");
 
+// const {
+//   getDepartments,
+//   getRoles,
+//   getEmployees,
+//   getEmployeesByManager,
+//   getEmployeesByDepartment,
+//   getSpendByDepartment,
+// } = require("./utils/view");
+
+// const { updateEmployeeRole, updateEmployeeManager } = require("./utils/update");
+
+// const {
+//   deleteDepartment,
+//   deleteRole,
+//   deleteEmployee,
+// } = require("./utils/delete");
+
 const init = async () => {
   console.log(
     figlet.textSync("Workforce Planner", {
@@ -30,6 +47,12 @@ const init = async () => {
 
     if (action === "view") {
       const viewOption = await inquirer.prompt(viewOptions);
+
+      const {
+        createDepartment,
+        createRole,
+        createEmployee,
+      } = require("./utils/add");
 
       if (viewOption === "viewDepartments") {
         getDepartments();

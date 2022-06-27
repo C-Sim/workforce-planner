@@ -30,19 +30,19 @@ CREATE TABLE employees (
 );
 
 
-SELECT 
-roles.id,
-roles.title AS role,
-roles.salary,
-departments.name AS department
-FROM roles
-INNER JOIN departments ON departments.id=role.department_id;
+-- SELECT 
+-- roles.id,
+-- roles.title AS role,
+-- roles.salary,
+-- departments.name AS department
+-- FROM roles
+-- INNER JOIN departments ON departments.id=role.department_id;
 
-SELECT 
-employees.id,
-employees.first_name,
-employees.last_name,
-employees.manager_id,
-roles.title AS role,
-FROM employees
-INNER JOIN roles ON roles.id=employees.role_id
+-- SELECT 
+-- employees.id,
+-- employees.first_name,
+-- employees.last_name,
+-- employees.manager_id,
+-- roles.title AS role,
+-- FROM employees
+-- INNER JOIN roles ON roles.id=employees.role_id

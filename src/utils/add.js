@@ -1,4 +1,5 @@
 const mysql = require("mysql2/promise")
+const inquirer = require("inquirer")
 
 const { getDepartments, getRoles, getEmployees } = require("./view");
 
@@ -17,7 +18,7 @@ const departmentInfo = getDepartments();
 const roleInfo = getRoles();
 const employeeInfo = getEmployees();
 
-const createDepartment = () => {
+const createDepartment = async () => {
     const departmentAnswers = await inquirer.prompt(departmentQuestions);
 
     const department = new Department(
@@ -32,7 +33,7 @@ const createDepartment = () => {
 
 };
 
-const createRole = () => {
+const createRole = async () => {
     const roleAnswers = await inquirer.prompt(roleQuestions);
 
     const role = new Role(
@@ -47,7 +48,7 @@ const createRole = () => {
 
 };
 
-const createEmployee = () => {
+const createEmployee = async () => {
     
     const employeeAnswers = await inquirer.prompt(employeeQuestions);
 

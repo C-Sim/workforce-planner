@@ -186,7 +186,6 @@ const deleteOptions = {
 //     ]
 // };
 
-// TODO - list choices from db - map through all retrieved?
 const departmentQuestions = [
   {
     name: "name",
@@ -203,6 +202,7 @@ const departmentQuestions = [
   },
 ];
 
+// TODO - list choices from db - map through all retrieved?
 const roleQuestions = [
   {
     name: "role",
@@ -238,6 +238,7 @@ const roleQuestions = [
   },
 ];
 
+// TODO - list choices from db - map through all retrieved?
 const employeeQuestions = [
   {
     name: "firstName",
