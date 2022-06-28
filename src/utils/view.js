@@ -1,26 +1,22 @@
-const mysql = require("mysql2/promise")
+const mysql = require("mysql2/promise");
 
-USE workforce_db;
-
-
+// USE workforce_db;
 
 const getDepartments = (db) => {
-    SELECT * FROM departments;
-    console.table.....
+  // SELECT * FROM departments;
+  // console.table.....
 };
 
 const getRoles = (db) => {
-    SELECT * FROM roles;
-
+  // SELECT * FROM roles;
 };
 
 const getEmployees = (db) => {
-    SELECT * FROM employees;
-
+  // SELECT * FROM employees;
 };
 
 const getEmployeesByManager = (db, manager) => {
-    SELECT * FROM employees WHERE id = employeeId;
+  // SELECT * FROM employees WHERE id = employeeId;
 };
 
 const getEmployeesByDepartment = (db, department) => {};

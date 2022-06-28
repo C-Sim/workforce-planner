@@ -7,27 +7,32 @@ const {
   addOptions,
   updateOptions,
   deleteOptions,
-  chooseDepartment,
-  chooseRole,
-  chooseEmployee,
+  // chooseDepartment,
+  // chooseRole,
+  // chooseEmployee,
+  departmentQuestions,
+  roleQuestions,
+  employeeQuestions,
 } = require("./questions");
 
-// const {
-//   getDepartments,
-//   getRoles,
-//   getEmployees,
-//   getEmployeesByManager,
-//   getEmployeesByDepartment,
-//   getSpendByDepartment,
-// } = require("./utils/view");
+const { createDepartment, createRole, createEmployee } = require("./utils/add");
 
-// const { updateEmployeeRole, updateEmployeeManager } = require("./utils/update");
+const {
+  getDepartments,
+  getRoles,
+  getEmployees,
+  getEmployeesByManager,
+  getEmployeesByDepartment,
+  getSpendByDepartment,
+} = require("./utils/view");
 
-// const {
-//   deleteDepartment,
-//   deleteRole,
-//   deleteEmployee,
-// } = require("./utils/delete");
+const { updateEmployeeRole, updateEmployeeManager } = require("./utils/update");
+
+const {
+  deleteDepartment,
+  deleteRole,
+  deleteEmployee,
+} = require("./utils/delete");
 
 const init = async () => {
   console.log(
@@ -45,14 +50,10 @@ const init = async () => {
   while (inProgress) {
     const { action } = await inquirer.prompt(confirmAction);
 
+    console.log(action);
+
     if (action === "view") {
       const viewOption = await inquirer.prompt(viewOptions);
-
-      const {
-        createDepartment,
-        createRole,
-        createEmployee,
-      } = require("./utils/add");
 
       if (viewOption === "viewDepartments") {
         getDepartments();
@@ -72,14 +73,22 @@ const init = async () => {
         getSpendByDepartment();
       }
     } else if (action === "add") {
-      const addOption = await inquirer.prompt(addOptions);
+      const addChoice = await inquirer.prompt(addOptions);
 
-      if (addOption === "addDepartment") {
-        createDepartment();
-      } else if (addOption === "addRole") {
-        createRole();
-      } else if (addOption === "addEmployee") {
-        createEmployee();
+      console.log(addChoice.addOptions);
+
+      if (addChoice.addOptions === "addDepartment") {
+        const departmentAnswers = await inquirer.prompt(departmentQuestions);
+
+        createDepartment(departmentAnswers);
+      } else if (addChoice.addOptions === "addRole") {
+        const roleAnswers = await inquirer.prompt(roleQuestions);
+
+        createRole(roleAnswers);
+      } else if (addChoice.addOptions === "addEmployee") {
+        const employeeAnswers = await inquirer.prompt(employeeQuestions);
+
+        createEmployee(employeeAnswers);
       }
     } else if (action === "update") {
       const updateOption = await inquirer.prompt(updateOptions);

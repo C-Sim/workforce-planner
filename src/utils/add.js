@@ -1,5 +1,5 @@
-const mysql = require("mysql2/promise")
-const inquirer = require("inquirer")
+const mysql = require("mysql2/promise");
+const inquirer = require("inquirer");
 
 const { getDepartments, getRoles, getEmployees } = require("./view");
 
@@ -7,69 +7,55 @@ const Employee = require("../lib/Employee");
 const Department = require("../lib/Department");
 const Role = require("../lib/Role");
 
-
 const {
-    departmentQuestions,
-    roleQuestions,
-    employeeQuestions,
-} = require("./questions");
-  
+  departmentQuestions,
+  roleQuestions,
+  employeeQuestions,
+} = require("../questions");
+
 const departmentInfo = getDepartments();
 const roleInfo = getRoles();
 const employeeInfo = getEmployees();
 
-const createDepartment = async () => {
-    const departmentAnswers = await inquirer.prompt(departmentQuestions);
+const createDepartment = (departmentAnswers) => {
+  //   console.log(departmentAnswers);
 
-    const department = new Department(
-    departmentAnswers.name,
-    );
+  const department = new Department(departmentAnswers.name);
 
-    departmentInfo.push(department);
+  //   departmentInfo.push(department);
 
-    console.log(departmentInfo)
+  //   console.log(departmentInfo);
 
-    // INSERT INTO departments (name) VALUES (departmentInfo);
-
+  // INSERT INTO departments (name) VALUES (departmentInfo);
 };
 
-const createRole = async () => {
-    const roleAnswers = await inquirer.prompt(roleQuestions);
-
-    const role = new Role(
+const createRole = (roleAnswers) => {
+  const role = new Role(
     roleAnswers.title,
     roleAnswers.salary,
-    roleAnswers.department,
-    );
+    roleAnswers.department
+  );
 
-    roleInfo.push(role);
+  //   roleInfo.push(role);
 
-    INSERT INTO role (title, salary, department_id) VALUES (roleInfo);
-
+  // INSERT INTO role (title, salary, department_id) VALUES (roleInfo);
 };
 
-const createEmployee = async () => {
-    
-    const employeeAnswers = await inquirer.prompt(employeeQuestions);
-
-    const employee = new Employee(
+const createEmployee = (employeeAnswers) => {
+  const employee = new Employee(
     employeeAnswers.firstName,
     employeeAnswers.lastName,
     employeeAnswers.role,
-    employeeAnswers.manager,
-    );
+    employeeAnswers.manager
+  );
 
-    employeeInfo.push(employee);
+  //   employeeInfo.push(employee);
 
-    INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (employeeInfo);
-
+  // INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (employeeInfo);
 };
 
-
-
-
 module.exports = {
- createDepartment,
- createRole,
- createEmployee,
-}
+  createDepartment,
+  createRole,
+  createEmployee,
+};

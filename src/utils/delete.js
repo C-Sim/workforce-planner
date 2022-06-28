@@ -1,14 +1,13 @@
-
-const mysql = require("mysql2/promise")
+const mysql = require("mysql2/promise");
 
 const { getDepartments, getRoles, getEmployees } = require("./view");
 
 const deleteDepartment = (department) => {
   getDepartments();
-  
-    //   TODO fix what should be pulled from inquirer response
 
-  DELETE FROM departments WHERE id = department.id
+  //   TODO fix what should be pulled from inquirer response
+
+  // DELETE FROM departments WHERE id = department.id
 };
 
 const deleteRole = (role) => {
@@ -17,15 +16,15 @@ const deleteRole = (role) => {
   //   TODO fix what should be pulled from inquirer response
 
   //   TODO - check if needs IN (1,2) for multiple entries
-  DELETE FROM roles WHERE id = role.id
+  // DELETE FROM roles WHERE id = role.id
 };
 
 const deleteEmployee = (employee) => {
   getEmployees();
-  
+
   //   TODO fix what should be pulled from inquirer response
-    
-  DELETE FROM employees WHERE id = employee.id
+
+  // DELETE FROM employees WHERE id = employee.id
 };
 
 module.exports = {

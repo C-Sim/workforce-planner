@@ -222,7 +222,7 @@ const roleQuestions = [
     type: "number",
     message: "What is the salary for the role?",
     validate: (salary) => {
-      if (salary.length > 0) {
+      if (salary > 0) {
         return true;
       } else {
         console.log(chalk.bgRed("Please enter a salary"));
@@ -244,7 +244,7 @@ const employeeQuestions = [
     name: "firstName",
     type: "input",
     message: "What is the employee's first name?",
-    validate: (irstName) => {
+    validate: (firstName) => {
       if (firstName.length > 0) {
         return true;
       } else {
@@ -295,4 +295,7 @@ module.exports = {
   departmentQuestions,
   roleQuestions,
   employeeQuestions,
+  // chooseDepartment,
+  // chooseRole,
+  // chooseEmployee,
 };
