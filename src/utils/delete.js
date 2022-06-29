@@ -3,10 +3,8 @@ const mysql = require("mysql2/promise");
 const { getDepartments, getRoles, getEmployees } = require("./view");
 
 const deleteDepartment = (department) => {
-  getDepartments();
-
+  // getDepartments();
   //   TODO fix what should be pulled from inquirer response
-
   // DELETE FROM departments WHERE id = department.id
 };
 

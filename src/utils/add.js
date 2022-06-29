@@ -13,9 +13,9 @@ const {
   employeeQuestions,
 } = require("../questions");
 
-const departmentInfo = getDepartments();
-const roleInfo = getRoles();
-const employeeInfo = getEmployees();
+// const departmentInfo = await getDepartments(db);
+// const roleInfo = getRoles();
+// const employeeInfo = getEmployees();
 
 const createDepartment = (departmentAnswers) => {
   //   console.log(departmentAnswers);

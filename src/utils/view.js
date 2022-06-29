@@ -1,25 +1,27 @@
 const mysql = require("mysql2/promise");
 
-const initDatabase = require("../db");
-
-// USE workforce_db;
-
-const getDepartments = async () => {
-  const departments = await executeQuery("SELECT * FROM departments");
-
-  console.table(departments);
+const getDepartments = async (db) => {
+  const [departments] = await db.query("SELECT * FROM departments");
+  console.log(departments);
+  console.table(
+    departments
+    // [departments.id, departments.department_name],
+    // ["id", "department"]
+  );
 };
 
-const getRoles = (db) => {
-  // SELECT * FROM roles;
+const getRoles = async (db) => {
+  const roles = await db.query("SELECT * FROM roles");
+  console.table(roles);
 };
 
-const getEmployees = (db) => {
-  // SELECT * FROM employees;
+const getEmployees = async (db) => {
+  const employees = await db.query("SELECT * FROM employees");
+  console.table(employees);
 };
 
 const getEmployeesByManager = (db, manager) => {
-  // SELECT * FROM employees WHERE id = employeeId;
+  // SELECT * FROM employees WHERE manager_id = NOT NULL;
 };
 
 const getEmployeesByDepartment = (db, department) => {};
