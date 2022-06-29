@@ -1,10 +1,13 @@
 const mysql = require("mysql2/promise");
 
+const initDatabase = require("../db");
+
 // USE workforce_db;
 
-const getDepartments = (db) => {
-  // SELECT * FROM departments;
-  // console.table.....
+const getDepartments = async () => {
+  const departments = await executeQuery("SELECT * FROM departments");
+
+  console.table(departments);
 };
 
 const getRoles = (db) => {

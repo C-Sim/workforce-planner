@@ -1,5 +1,10 @@
+require("dotenv").config();
+
 const inquirer = require("inquirer");
 const figlet = require("figlet");
+
+const initDatabase = require("./db");
+
 
 const {
   confirmAction,
@@ -45,84 +50,105 @@ const init = async () => {
     })
   );
 
-  let inProgress = true;
+  try {
+    const { closeConnection } = await initDatabase({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+    });
 
-  while (inProgress) {
-    const { action } = await inquirer.prompt(confirmAction);
+    let inProgress = true;
 
-    console.log(action);
+    while (inProgress) {
+      const { action } = await inquirer.prompt(confirmAction);
 
-    if (action === "view") {
-      const viewOption = await inquirer.prompt(viewOptions);
+      console.log(action);
 
-      if (viewOption === "viewDepartments") {
-        getDepartments();
-      } else if (viewOption === "viewRoles") {
-        getRoles();
-      } else if (viewOption === "viewEmployees") {
-        getEmployees();
-      } else if (viewOption === "viewEmployeesByManager") {
-        const manager = await inquirer.prompt(chooseManager);
+      if (action === "view") {
+        const viewChoice = await inquirer.prompt(viewOptions);
 
-        getEmployeesByManager(manager);
-      } else if (viewOption === "viewEmployeesByDepartment") {
-        const department = await inquirer.prompt(chooseDepartment);
+        if (viewChoice.viewOptions === "viewDepartments") {
+          getDepartments();
+        } else if (viewOption === "viewRoles") {
+          getRoles();
+        } else if (viewOption === "viewEmployees") {
+          getEmployees();
+        } else if (viewOption === "viewEmployeesByManager") {
+          const manager = await inquirer.prompt(chooseManager);
 
-        getEmployeesByDepartment(department);
-      } else if (viewOption === "viewSpendByDepartment") {
-        getSpendByDepartment();
+          getEmployeesByManager(manager);
+        } else if (viewOption === "viewEmployeesByDepartment") {
+          const department = await inquirer.prompt(chooseDepartment);
+
+          getEmployeesByDepartment(department);
+        } else if (viewOption === "viewSpendByDepartment") {
+          getSpendByDepartment();
+        }
+      } else if (action === "add") {
+        const addChoice = await inquirer.prompt(addOptions);
+
+        console.log(addChoice.addOptions);
+
+        if (addChoice.addOptions === "addDepartment") {
+          const departmentAnswers = await inquirer.prompt(departmentQuestions);
+
+          createDepartment(departmentAnswers);
+        } else if (addChoice.addOptions === "addRole") {
+          const roleAnswers = await inquirer.prompt(roleQuestions);
+
+          createRole(roleAnswers);
+        } else if (addChoice.addOptions === "addEmployee") {
+          const employeeAnswers = await inquirer.prompt(employeeQuestions);
+
+          createEmployee(employeeAnswers);
+        }
+      } else if (action === "update") {
+        const updateOption = await inquirer.prompt(updateOptions);
+
+        if (updateOption === "updateEmployeeRole") {
+          const employee = await inquirer.prompt(chooseEmployee);
+          const role = await inquirer.prompt(chooseRole);
+
+          updateEmployeeRole(employee, role);
+        } else if (updateOption === "updateEmployeeManager") {
+          const employee = await inquirer.prompt(chooseEmployee);
+          const manager = await inquirer.prompt(chooseManager);
+
+          updateEmployeeManager(employee, manager);
+        }
+      } else if (action === "delete") {
+        const deleteOption = await inquirer.prompt(deleteOptions);
+
+        if (deleteOption === "deleteDepartment") {
+          const department = await inquirer.prompt(chooseDepartment);
+
+          deleteDepartment(department);
+        } else if (deleteOption === "deleteRole") {
+          const role = await inquirer.prompt(chooseRole);
+
+          deleteRole(role);
+        } else if (deleteOption === "deleteEmployee") {
+          const employee = await inquirer.prompt(chooseEmployee);
+
+          deleteEmployee(employee);
+        }
+      } else {
+        await closeConnection();
+        inProgress = false;
+        console.log(
+          figlet.textSync("Thank you, goodbye", {
+            font: "Standard",
+            horizontalLayout: "default",
+            verticalLayout: "default",
+            width: 64,
+            whitespaceBreak: true,
+          })
+        );
       }
-    } else if (action === "add") {
-      const addChoice = await inquirer.prompt(addOptions);
-
-      console.log(addChoice.addOptions);
-
-      if (addChoice.addOptions === "addDepartment") {
-        const departmentAnswers = await inquirer.prompt(departmentQuestions);
-
-        createDepartment(departmentAnswers);
-      } else if (addChoice.addOptions === "addRole") {
-        const roleAnswers = await inquirer.prompt(roleQuestions);
-
-        createRole(roleAnswers);
-      } else if (addChoice.addOptions === "addEmployee") {
-        const employeeAnswers = await inquirer.prompt(employeeQuestions);
-
-        createEmployee(employeeAnswers);
-      }
-    } else if (action === "update") {
-      const updateOption = await inquirer.prompt(updateOptions);
-
-      if (updateOption === "updateEmployeeRole") {
-        const employee = await inquirer.prompt(chooseEmployee);
-        const role = await inquirer.prompt(chooseRole);
-
-        updateEmployeeRole(employee, role);
-      } else if (updateOption === "updateEmployeeManager") {
-        const employee = await inquirer.prompt(chooseEmployee);
-        const manager = await inquirer.prompt(chooseManager);
-
-        updateEmployeeManager(employee, manager);
-      }
-    } else if (action === "delete") {
-      const deleteOption = await inquirer.prompt(deleteOptions);
-
-      if (deleteOption === "deleteDepartment") {
-        const department = await inquirer.prompt(chooseDepartment);
-
-        deleteDepartment(department);
-      } else if (deleteOption === "deleteRole") {
-        const role = await inquirer.prompt(chooseRole);
-
-        deleteRole(role);
-      } else if (deleteOption === "deleteEmployee") {
-        const employee = await inquirer.prompt(chooseEmployee);
-
-        deleteEmployee(employee);
-      }
-    } else {
-      inProgress = false;
     }
+  } catch (error) {
+    console.log(`[ERROR]: Internal error | ${error.message}`);
   }
 };
 
