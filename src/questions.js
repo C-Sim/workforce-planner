@@ -1,11 +1,38 @@
 const chalk = require("chalk");
 const mysql = require("mysql2/promise");
 
-// const { getDepartments, getRoles, getEmployees } = require("./view");
+const { getDepartments, getRoles, getEmployees } = require("./utils/view");
 
-// SELECT * FROM departments;
-// SELECT * FROM roles;
-// SELECT * FROM employees;
+// const departmentList = async () => {
+//   await getDepartments();
+// };
+
+// const roleList = async (db) => {
+//   const [roles] = await db.query(`SELECT
+//   roles.id,
+//   roles.title AS role,
+//   roles.salary,
+//   departments.department_name AS department
+//   FROM roles
+//   INNER JOIN departments ON departments.id=roles.department_id
+//   ORDER BY department;`);
+//   console.table(roles);
+// };
+
+// const employeeList = async (db) => {
+//   const [employees] = await db.query(`SELECT e.id,
+//   CONCAT(e.first_name,' ',
+//          e.last_name) AS employee,
+//          r.salary, r.title,
+//          d.department_name,
+//         CONCAT(m.first_name,' ',
+//          m.last_name) AS manager
+//   FROM employees AS e
+//     LEFT JOIN employees AS m
+//     ON e.manager_id = m.id INNER JOIN roles r ON e.role_id = r.id LEFT JOIN departments d ON r.department_id = d.id
+//   `);
+//   console.table(employees);
+// };
 
 const confirmAction = {
   name: "action",
@@ -139,15 +166,12 @@ const deleteOptions = {
 
 // TODO - list choices from db - map through all retrieved?
 // const chooseDepartment = {
-//     name: "department",
-//     type: "list",
-//     message: "Which department?"
-//     choices: [
-//      {
-//         name: departments.name,
-//         id: departments.id
-//      }
-//     ]
+//   name: "department",
+//   type: "list",
+//   message: "Which department?",
+//   choices: async () => {
+//     await getDepartments;
+//   },
 // };
 
 // const chooseRole = {
@@ -279,7 +303,7 @@ const employeeQuestions = [
     choices: [
       {
         name: "They do not have a manager",
-        value: "noManager",
+        value: "NULL",
         short: "NM",
       },
     ],

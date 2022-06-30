@@ -3,9 +3,9 @@ const inquirer = require("inquirer");
 
 const { getDepartments, getRoles, getEmployees } = require("./view");
 
-const Employee = require("../lib/Employee");
-const Department = require("../lib/Department");
-const Role = require("../lib/Role");
+// const Employee = require("../lib/Employee");
+// const Department = require("../lib/Department");
+// const Role = require("../lib/Role");
 
 const {
   departmentQuestions,
@@ -13,45 +13,30 @@ const {
   employeeQuestions,
 } = require("../questions");
 
-// const departmentInfo = await getDepartments(db);
-// const roleInfo = getRoles();
-// const employeeInfo = getEmployees();
-
-const createDepartment = (departmentAnswers) => {
-  //   console.log(departmentAnswers);
-
-  const department = new Department(departmentAnswers.name);
-
-  //   departmentInfo.push(department);
-
-  //   console.log(departmentInfo);
-
-  // INSERT INTO departments (name) VALUES (departmentInfo);
-};
-
-const createRole = (roleAnswers) => {
-  const role = new Role(
-    roleAnswers.title,
-    roleAnswers.salary,
-    roleAnswers.department
+const createDepartment = async (db, departmentAnswers) => {
+  await db.query(
+    `INSERT INTO departments (department_name) VALUES ("${departmentAnswers.name}")`
   );
 
-  //   roleInfo.push(role);
-
-  // INSERT INTO role (title, salary, department_id) VALUES (roleInfo);
+  await getDepartments(db);
 };
 
-const createEmployee = (employeeAnswers) => {
-  const employee = new Employee(
-    employeeAnswers.firstName,
-    employeeAnswers.lastName,
-    employeeAnswers.role,
-    employeeAnswers.manager
+// TODO fix role id
+const createRole = async (db, roleAnswers) => {
+  await db.query(
+    `INSERT INTO roles (title, salary, department_id) VALUES ("${roleAnswers.role}", "${roleAnswers.role}", ${roleAnswers.department.id})`
   );
 
-  //   employeeInfo.push(employee);
+  await getRoles(db);
+};
 
-  // INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (employeeInfo);
+// TODO fix manager id
+const createEmployee = async (db, employeeAnswers) => {
+  await db.query(
+    `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${employeeAnswers.firstName}", "${employeeAnswers.lastName}", ${employeeAnswers.role.id}, ${employeeAnswers.manager.id})`
+  );
+
+  await getRoles(db);
 };
 
 module.exports = {

@@ -2,10 +2,14 @@ const mysql = require("mysql2/promise");
 
 const { getDepartments, getRoles, getEmployees } = require("./view");
 
-const deleteDepartment = (department) => {
-  // getDepartments();
-  //   TODO fix what should be pulled from inquirer response
-  // DELETE FROM departments WHERE id = department.id
+const deleteDepartment = async (db, department) => {
+  await getDepartments(db);
+  await db.query(
+    `DELETE FROM departments WHERE departments.id = department.id`
+  );
+
+  await getDepartments(db);
+  //
 };
 
 const deleteRole = (role) => {

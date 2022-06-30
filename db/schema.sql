@@ -31,20 +31,3 @@ CREATE TABLE employees (
 );
 
 
-SELECT 
-roles.id,
-roles.title AS role,
-roles.salary,
-departments.department_name AS department
-FROM roles
-INNER JOIN departments ON departments.id=roles.department_id;
-
-SELECT CONCAT(E.FIRST_NAME,' ',
-       E.LAST_NAME) AS 'USER',
-       R.SALARY, R.TITLE,
-       D.DEPT_NAME,
-      CONCAT( M.FIRST_NAME,' ',
-       M.LAST_NAME) AS MANAGER
-FROM EMPLOYEE AS E
-  JOIN EMPLOYEE AS M 
-  ON E.MANAGER_ID = M.ID INNER JOIN ROLE R ON E.ROLE_ID = R.ID LEFT JOIN DEPARTMENT D ON R.DEPARTMENT_ID = D.ID ;
