@@ -211,6 +211,15 @@ const roleCreationQuestions = async (db) => {
 const employeeCreationQuestions = async (db) => {
   const employees = await getEmployees(db);
 
+  const roles = await getRoles(db);
+
+  const managerOptions = employeeList(employees);
+
+  managerOptions.push({
+    name: "They do not have a manager",
+    value: "NULL",
+  });
+
   const employeeQuestions = [
     {
       name: "firstName",
@@ -248,14 +257,7 @@ const employeeCreationQuestions = async (db) => {
       name: "manager",
       type: "list",
       message: "Who is the employee's manager?",
-      choices: [
-        employeeList(employees),
-        {
-          name: "They do not have a manager",
-          value: "NULL",
-          short: "NM",
-        },
-      ],
+      choices: managerOptions,
     },
   ];
 

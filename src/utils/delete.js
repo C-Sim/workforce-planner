@@ -8,13 +8,13 @@ const deleteDepartment = async (db, department) => {
   await db.query(`DELETE FROM departments WHERE id = ${department.department}`);
 };
 
-const deleteRole = async (role) => {
+const deleteRole = async (db, role) => {
   await getRoles(db);
 
   await db.query(`DELETE FROM roles WHERE id = ${role.role}`);
 };
 
-const deleteEmployee = async (employee) => {
+const deleteEmployee = async (db, employee) => {
   await getEmployees(db);
 
   await db.query(`DELETE FROM employees WHERE id = ${employee.employee}`);
