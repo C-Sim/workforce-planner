@@ -4,6 +4,12 @@ require("dotenv").config();
 const inquirer = require("inquirer");
 const figlet = require("figlet");
 const mysql = require("mysql2/promise");
+const {
+  departmentList,
+  roleList,
+  employeeList,
+  managerList,
+} = require("./utils/helpers");
 
 const {
   confirmAction,
@@ -29,15 +35,14 @@ const {
   getEmployeesByDepartment,
   getSpendByDepartment,
 } = require("./utils/view");
-const { config } = require("dotenv");
 
 // const { updateEmployeeRole, updateEmployeeManager } = require("./utils/update");
 
-// const {
-//   deleteDepartment,
-//   deleteRole,
-//   deleteEmployee,
-// } = require("./utils/delete");
+const {
+  deleteDepartment,
+  deleteRole,
+  deleteEmployee,
+} = require("./utils/delete");
 
 const init = async () => {
   console.log(
@@ -69,13 +74,28 @@ const init = async () => {
         const viewChoice = await inquirer.prompt(viewOptions);
 
         if (viewChoice.viewOptions === "viewDepartments") {
-          await getDepartments(db);
+          const departments = await getDepartments(db);
+
+          console.table(departments);
         } else if (viewChoice.viewOptions === "viewRoles") {
-          await getRoles(db);
+          const roles = await getRoles(db);
+
+          console.table(roles);
         } else if (viewChoice.viewOptions === "viewEmployees") {
-          await getEmployees(db);
+          const employees = await getEmployees(db);
+
+          console.table(employees);
         } else if (viewChoice.viewOptions === "viewEmployeesByManager") {
-          const manager = await inquirer.prompt(chooseManager);
+          const managers = await getEmployees(db);
+
+          const manager = await inquirer.prompt([
+            {
+              name: "manager",
+              type: "list",
+              message: "Which managers?",
+              choices: managerList(managers),
+            },
+          ]);
 
           await getEmployeesByManager(db, manager);
         } else if (viewChoice.viewOptions === "viewEmployeesByDepartment") {
@@ -121,19 +141,44 @@ const init = async () => {
         const deleteChoice = await inquirer.prompt(deleteOptions);
 
         if (deleteChoice.deleteOptions === "deleteDepartment") {
-          await getDepartments(db);
+          const departments = await getDepartments(db);
 
-          const department = await inquirer.prompt(chooseDepartment);
+          const department = await inquirer.prompt([
+            {
+              name: "department",
+              type: "list",
+              message: "Which departments?",
+              choices: departmentList(departments),
+            },
+          ]);
 
-          deleteDepartment(department);
-          //   } else if (deleteChoice.deleteOptions === "deleteRole") {
-          //     const role = await inquirer.prompt(chooseRole);
+          await deleteDepartment(db, department);
+        } else if (deleteChoice.deleteOptions === "deleteRole") {
+          const roles = await getRoles(db);
 
-          //     deleteRole(role);
-          //   } else if (deleteChoice.deleteOptions === "deleteEmployee") {
-          //     const employee = await inquirer.prompt(chooseEmployee);
+          const role = await inquirer.prompt([
+            {
+              name: "role",
+              type: "list",
+              message: "Which roles?",
+              choices: roleList(roles),
+            },
+          ]);
 
-          //     deleteEmployee(employee);
+          await deleteRole(db, role);
+        } else if (deleteChoice.deleteOptions === "deleteEmployee") {
+          const employees = await getEmployees(db);
+
+          const employee = await inquirer.prompt([
+            {
+              name: "employee",
+              type: "list",
+              message: "Which employees?",
+              choices: employeeList(employees),
+            },
+          ]);
+
+          await deleteEmployee(employee);
         }
       } else {
         await db.end();

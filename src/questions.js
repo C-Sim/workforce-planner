@@ -1,11 +1,7 @@
 const chalk = require("chalk");
 const mysql = require("mysql2/promise");
 
-const { getDepartments, getRoles, getEmployees } = require("./utils/view");
-
-// const departmentList = async () => {
-//   await getDepartments();
-// };
+const { departmentList } = require("./utils/view");
 
 // const roleList = async (db) => {
 //   const [roles] = await db.query(`SELECT
@@ -163,52 +159,6 @@ const deleteOptions = {
     },
   ],
 };
-
-// TODO - list choices from db - map through all retrieved?
-// const chooseDepartment = {
-//   name: "department",
-//   type: "list",
-//   message: "Which department?",
-//   choices: async () => {
-//     await getDepartments;
-//   },
-// };
-
-// const chooseRole = {
-//     name: "role",
-//     type: "list",
-//     message: "Which role?"
-//     choices: [
-//      {
-//         name: roles.title,
-//         id: roles.id
-//      }
-//     ]
-// };
-
-// const chooseEmployee = {
-//     name: "employee",
-//     type: "list",
-//     message: "Which employee?"
-//     choices: [
-//      {
-//         name: employee.first_name employee.last_name,
-//         id: employees.id,
-//      }
-//     ]
-// };
-
-// const chooseManager = {
-//     name: "manager",
-//     type: "list",
-//     message: "Which manager?"
-//     choices: [
-//      {
-//         name: employee.first_name employee.last_name,
-//         id: employees.manager_id,
-//      }
-//     ]
-// };
 
 const departmentQuestions = [
   {

@@ -3,17 +3,16 @@ const mysql = require("mysql2/promise");
 const { getDepartments, getRoles, getEmployees } = require("./view");
 
 const deleteDepartment = async (db, department) => {
-  await getDepartments(db);
   await db.query(
-    `DELETE FROM departments WHERE departments.id = department.id`
+    `DELETE FROM departments WHERE ${departments.id} = ${department.id}`
   );
 
   await getDepartments(db);
   //
 };
 
-const deleteRole = (role) => {
-  getRoles();
+const deleteRole = async (role) => {
+  await getRoles(db);
 
   //   TODO fix what should be pulled from inquirer response
 
@@ -21,8 +20,8 @@ const deleteRole = (role) => {
   // DELETE FROM roles WHERE id = role.id
 };
 
-const deleteEmployee = (employee) => {
-  getEmployees();
+const deleteEmployee = async (employee) => {
+  await getEmployees(db);
 
   //   TODO fix what should be pulled from inquirer response
 

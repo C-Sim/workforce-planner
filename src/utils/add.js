@@ -7,12 +7,6 @@ const { getDepartments, getRoles, getEmployees } = require("./view");
 // const Department = require("../lib/Department");
 // const Role = require("../lib/Role");
 
-const {
-  departmentQuestions,
-  roleQuestions,
-  employeeQuestions,
-} = require("../questions");
-
 const createDepartment = async (db, departmentAnswers) => {
   await db.query(
     `INSERT INTO departments (department_name) VALUES ("${departmentAnswers.name}")`
@@ -36,7 +30,7 @@ const createEmployee = async (db, employeeAnswers) => {
     `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${employeeAnswers.firstName}", "${employeeAnswers.lastName}", ${employeeAnswers.role.id}, ${employeeAnswers.manager.id})`
   );
 
-  await getRoles(db);
+  await getEmployees(db);
 };
 
 module.exports = {
