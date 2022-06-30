@@ -1,7 +1,9 @@
 const mysql = require("mysql2/promise");
 
 const getDepartments = async (db) => {
-  const [departments] = await db.query("SELECT * FROM departments");
+  const [departments] = await db.query(
+    "SELECT * FROM departments ORDER BY department_name"
+  );
   return departments;
 };
 
@@ -28,6 +30,7 @@ const getEmployees = async (db) => {
   FROM employees AS e
     LEFT JOIN employees AS m 
     ON e.manager_id = m.id INNER JOIN roles r ON e.role_id = r.id LEFT JOIN departments d ON r.department_id = d.id
+    ORDER BY e.last_name;
   `);
   return employees;
 };

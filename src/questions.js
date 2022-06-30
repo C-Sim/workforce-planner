@@ -1,6 +1,13 @@
 const chalk = require("chalk");
 const mysql = require("mysql2/promise");
 
+const {
+  departmentList,
+  roleList,
+  employeeList,
+  managerList,
+} = require("./utils/helpers");
+
 const confirmAction = {
   name: "action",
   type: "list",
@@ -179,7 +186,7 @@ const roleQuestions = [
     name: "department",
     type: "list",
     message: "Which department does the role belong to?",
-    choices: [{}],
+    // choices: departmentList(),
   },
 ];
 
@@ -215,13 +222,14 @@ const employeeQuestions = [
     name: "role",
     type: "list",
     message: "What is the employee's role?",
-    choices: [{}],
+    // choices: roleList(),
   },
   {
     name: "manager",
     type: "list",
     message: "Who is the employee's manager?",
     choices: [
+      // employeeList(),
       {
         name: "They do not have a manager",
         value: "NULL",

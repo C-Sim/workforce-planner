@@ -176,7 +176,7 @@ const init = async () => {
             },
           ]);
 
-          await deleteEmployee(employee);
+          await deleteEmployee(db, employee);
         }
       } else {
         await db.end();

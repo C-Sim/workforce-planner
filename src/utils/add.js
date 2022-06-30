@@ -3,10 +3,6 @@ const inquirer = require("inquirer");
 
 const { getDepartments, getRoles, getEmployees } = require("./view");
 
-// const Employee = require("../lib/Employee");
-// const Department = require("../lib/Department");
-// const Role = require("../lib/Role");
-
 const createDepartment = async (db, departmentAnswers) => {
   await db.query(
     `INSERT INTO departments (department_name) VALUES ("${departmentAnswers.name}")`
@@ -17,6 +13,7 @@ const createDepartment = async (db, departmentAnswers) => {
 
 // TODO fix role id
 const createRole = async (db, roleAnswers) => {
+  console.log(roleAnswers);
   await db.query(
     `INSERT INTO roles (title, salary, department_id) VALUES ("${roleAnswers.role}", "${roleAnswers.role}", ${roleAnswers.department.id})`
   );
