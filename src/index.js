@@ -4,6 +4,7 @@ require("dotenv").config();
 const inquirer = require("inquirer");
 const figlet = require("figlet");
 const mysql = require("mysql2/promise");
+
 const {
   departmentList,
   roleList,
@@ -17,9 +18,6 @@ const {
   addOptions,
   updateOptions,
   deleteOptions,
-  chooseDepartment,
-  // chooseRole,
-  // chooseEmployee,
   departmentQuestions,
   roleQuestions,
   employeeQuestions,
@@ -147,7 +145,7 @@ const init = async () => {
             {
               name: "department",
               type: "list",
-              message: "Which departments?",
+              message: "Which department?",
               choices: departmentList(departments),
             },
           ]);
@@ -160,7 +158,7 @@ const init = async () => {
             {
               name: "role",
               type: "list",
-              message: "Which roles?",
+              message: "Which role?",
               choices: roleList(roles),
             },
           ]);
@@ -173,7 +171,7 @@ const init = async () => {
             {
               name: "employee",
               type: "list",
-              message: "Which employees?",
+              message: "Which employee?",
               choices: employeeList(employees),
             },
           ]);
