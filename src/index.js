@@ -19,8 +19,8 @@ const {
   updateOptions,
   deleteOptions,
   departmentQuestions,
-  roleQuestions,
-  employeeQuestions,
+  roleCreationQuestions,
+  employeeCreationQuestions,
 } = require("./questions");
 
 const { createDepartment, createRole, createEmployee } = require("./utils/add");
@@ -113,11 +113,11 @@ const init = async () => {
 
           createDepartment(db, departmentAnswers);
         } else if (addChoice.addOptions === "addRole") {
-          const roleAnswers = await inquirer.prompt(roleQuestions);
+          const roleAnswers = await roleCreationQuestions(db);
 
           createRole(db, roleAnswers);
         } else if (addChoice.addOptions === "addEmployee") {
-          const employeeAnswers = await inquirer.prompt(employeeQuestions);
+          const employeeAnswers = await employeeCreationQuestions(db);
 
           createEmployee(db, employeeAnswers);
         }

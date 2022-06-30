@@ -15,7 +15,7 @@ const createDepartment = async (db, departmentAnswers) => {
 const createRole = async (db, roleAnswers) => {
   console.log(roleAnswers);
   await db.query(
-    `INSERT INTO roles (title, salary, department_id) VALUES ("${roleAnswers.role}", "${roleAnswers.role}", ${roleAnswers.department.id})`
+    `INSERT INTO roles (title, salary, department_id) VALUES ("${roleAnswers.role}", "${roleAnswers.salary}", ${roleAnswers.department})`
   );
 
   await getRoles(db);

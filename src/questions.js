@@ -1,5 +1,15 @@
 const chalk = require("chalk");
 const mysql = require("mysql2/promise");
+const inquirer = require("inquirer");
+
+const {
+  getDepartments,
+  getRoles,
+  getEmployees,
+  getEmployeesByManager,
+  getEmployeesByDepartment,
+  getSpendByDepartment,
+} = require("./utils/view");
 
 const {
   departmentList,
@@ -155,89 +165,104 @@ const departmentQuestions = [
 ];
 
 // TODO - list choices from db - map through all retrieved?
-const roleQuestions = [
-  {
-    name: "role",
-    type: "input",
-    message: "What is the role title?",
-    validate: (role) => {
-      if (role.length > 0) {
-        return true;
-      } else {
-        console.log(chalk.bgRed("Please enter a name"));
-        return false;
-      }
+const roleCreationQuestions = async (db) => {
+  const departments = await getDepartments(db);
+
+  const roleQuestions = [
+    {
+      name: "role",
+      type: "input",
+      message: "What is the role title?",
+      validate: (role) => {
+        if (role.length) {
+          return true;
+        } else {
+          console.log(chalk.bgRed("Please enter a name"));
+          return false;
+        }
+      },
     },
-  },
-  {
-    name: "salary",
-    type: "number",
-    message: "What is the salary for the role?",
-    validate: (salary) => {
-      if (salary > 0) {
-        return true;
-      } else {
-        console.log(chalk.bgRed("Please enter a salary"));
-        return false;
-      }
+    {
+      name: "salary",
+      type: "input",
+      message: "What is the salary for the role?",
+      validate: (salary) => {
+        if (!isNaN(salary)) {
+          return true;
+        } else {
+          console.log(chalk.bgRed("Please enter a salary"));
+          return false;
+        }
+      },
     },
-  },
-  {
-    name: "department",
-    type: "list",
-    message: "Which department does the role belong to?",
-    // choices: departmentList(),
-  },
-];
+    {
+      name: "department",
+      type: "list",
+      message: "Which department does the role belong to?",
+      choices: departmentList(departments),
+    },
+  ];
+  const roleAnswers = await inquirer.prompt(roleQuestions);
+
+  return roleAnswers;
+};
 
 // TODO - list choices from db - map through all retrieved?
-const employeeQuestions = [
-  {
-    name: "firstName",
-    type: "input",
-    message: "What is the employee's first name?",
-    validate: (firstName) => {
-      if (firstName.length > 0) {
-        return true;
-      } else {
-        console.log(chalk.bgRed("Please enter the employee's first name"));
-        return false;
-      }
-    },
-  },
-  {
-    name: "lastName",
-    type: "input",
-    message: "What is the employee's last name?",
-    validate: (lastName) => {
-      if (lastName.length > 0) {
-        return true;
-      } else {
-        console.log(chalk.bgRed("Please enter the employee's last name"));
-        return false;
-      }
-    },
-  },
-  {
-    name: "role",
-    type: "list",
-    message: "What is the employee's role?",
-    // choices: roleList(),
-  },
-  {
-    name: "manager",
-    type: "list",
-    message: "Who is the employee's manager?",
-    choices: [
-      // employeeList(),
-      {
-        name: "They do not have a manager",
-        value: "NULL",
-        short: "NM",
+const employeeCreationQuestions = async (db) => {
+  const employees = await getEmployees(db);
+
+  const employeeQuestions = [
+    {
+      name: "firstName",
+      type: "input",
+      message: "What is the employee's first name?",
+      validate: (firstName) => {
+        if (firstName.length) {
+          return true;
+        } else {
+          console.log(chalk.bgRed("Please enter the employee's first name"));
+          return false;
+        }
       },
-    ],
-  },
-];
+    },
+    {
+      name: "lastName",
+      type: "input",
+      message: "What is the employee's last name?",
+      validate: (lastName) => {
+        if (lastName.length) {
+          return true;
+        } else {
+          console.log(chalk.bgRed("Please enter the employee's last name"));
+          return false;
+        }
+      },
+    },
+    {
+      name: "role",
+      type: "list",
+      message: "What is the employee's role?",
+      choices: roleList(roles),
+    },
+    {
+      name: "manager",
+      type: "list",
+      message: "Who is the employee's manager?",
+      choices: [
+        employeeList(employees),
+        {
+          name: "They do not have a manager",
+          value: "NULL",
+          short: "NM",
+        },
+      ],
+    },
+  ];
+
+  const employeeAnswers = await inquirer.prompt(employeeQuestions);
+
+  return employeeAnswers;
+};
 
 module.exports = {
   confirmAction,
@@ -246,6 +271,6 @@ module.exports = {
   updateOptions,
   deleteOptions,
   departmentQuestions,
-  roleQuestions,
-  employeeQuestions,
+  roleCreationQuestions,
+  employeeCreationQuestions,
 };
