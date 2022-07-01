@@ -77,7 +77,21 @@ const getEmployeesByDepartment = async (db, department) => {
   return employees;
 };
 
-const getSpendByDepartment = async (db) => {};
+const getSpendByDepartment = async (db) => {
+  const [spend] = await db.query(`SELECT department_name, SUM(salary) AS Spend
+    
+
+  FROM employees AS e
+  
+    LEFT JOIN employees AS m 
+    ON e.manager_id = m.id INNER JOIN roles r ON e.role_id = r.id LEFT JOIN departments d ON r.department_id = d.id
+    
+  GROUP BY department_name
+      
+  ORDER BY department_name`);
+
+  return spend;
+};
 
 module.exports = {
   getDepartments,

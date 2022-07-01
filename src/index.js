@@ -109,7 +109,9 @@ const init = async () => {
             console.log("This department has no employees.");
           }
         } else if (viewChoice.viewOptions === "viewSpendByDepartment") {
-          await getSpendByDepartment(db);
+          const spend = await getSpendByDepartment(db);
+
+          console.table(spend);
         }
       } else if (action === "add") {
         const addChoice = await inquirer.prompt(addOptions);
