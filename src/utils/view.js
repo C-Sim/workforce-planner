@@ -36,10 +36,46 @@ const getEmployees = async (db) => {
 };
 
 const getEmployeesByManager = async (db, manager) => {
-  // SELECT * FROM employees WHERE manager_id = NOT NULL;
+  const [employees] = await db.query(
+    `SELECT e.id,
+    CONCAT(e.first_name,' ',
+           e.last_name) AS employee,
+           r.salary, r.title,
+           d.department_name,
+          CONCAT(m.first_name,' ',
+           m.last_name) AS manager
+    FROM employees AS e
+    
+      LEFT JOIN employees AS m 
+      ON e.manager_id = m.id INNER JOIN roles r ON e.role_id = r.id LEFT JOIN departments d ON r.department_id = d.id
+      WHERE m.id = ${manager.manager}
+      ORDER BY e.last_name;
+  `
+  );
+
+  return employees;
 };
 
-const getEmployeesByDepartment = async (db, department) => {};
+const getEmployeesByDepartment = async (db, department) => {
+  const [employees] = await db.query(
+    `SELECT e.id,
+    CONCAT(e.first_name,' ',
+           e.last_name) AS employee,
+           r.salary, r.title,
+           d.department_name,
+          CONCAT(m.first_name,' ',
+           m.last_name) AS manager
+    FROM employees AS e
+    
+      LEFT JOIN employees AS m 
+      ON e.manager_id = m.id INNER JOIN roles r ON e.role_id = r.id LEFT JOIN departments d ON r.department_id = d.id
+      WHERE d.id = ${department.department}
+      ORDER BY e.last_name;
+  `
+  );
+
+  return employees;
+};
 
 const getSpendByDepartment = async (db) => {};
 

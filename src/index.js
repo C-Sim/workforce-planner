@@ -88,22 +88,26 @@ const init = async () => {
 
           console.table(employees);
         } else if (viewChoice.viewOptions === "viewEmployeesByManager") {
-          // const managers = await getEmployees(db);
+          // const employee = await chooseEmployee(db);
+          const manager = await chooseManager(db);
 
-          // const manager = await inquirer.prompt([
-          //   {
-          //     name: "manager",
-          //     type: "list",
-          //     message: "Which managers?",
-          //     choices: managerList(managers),
-          //   },
-          // ]);
+          const employees = await getEmployeesByManager(db, manager);
 
-          await getEmployeesByManager(db, manager);
+          if (employees.length) {
+            console.table(employees);
+          } else {
+            console.log("This person is not a manager.");
+          }
         } else if (viewChoice.viewOptions === "viewEmployeesByDepartment") {
-          const department = await inquirer.prompt(chooseDepartment);
+          const department = await chooseDepartment(db);
 
-          await getEmployeesByDepartment(db, department);
+          const employees = await getEmployeesByDepartment(db, department);
+
+          if (employees.length) {
+            console.table(employees);
+          } else {
+            console.log("This department has no employees.");
+          }
         } else if (viewChoice.viewOptions === "viewSpendByDepartment") {
           await getSpendByDepartment(db);
         }
