@@ -1,5 +1,3 @@
-const mysql = require("mysql2/promise");
-
 const getDepartments = async (db) => {
   const [departments] = await db.query(
     "SELECT * FROM departments ORDER BY department_name"

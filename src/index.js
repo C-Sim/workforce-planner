@@ -6,13 +6,6 @@ const figlet = require("figlet");
 const mysql = require("mysql2/promise");
 
 const {
-  departmentList,
-  roleList,
-  employeeList,
-  managerList,
-} = require("./utils/helpers");
-
-const {
   confirmAction,
   viewOptions,
   addOptions,
@@ -115,8 +108,6 @@ const init = async () => {
         }
       } else if (action === "add") {
         const addChoice = await inquirer.prompt(addOptions);
-
-        console.log(addChoice.addOptions);
 
         if (addChoice.addOptions === "addDepartment") {
           const departmentAnswers = await inquirer.prompt(departmentQuestions);

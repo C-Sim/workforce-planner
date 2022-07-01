@@ -1,22 +1,9 @@
 const chalk = require("chalk");
-const mysql = require("mysql2/promise");
 const inquirer = require("inquirer");
 
-const {
-  getDepartments,
-  getRoles,
-  getEmployees,
-  getEmployeesByManager,
-  getEmployeesByDepartment,
-  getSpendByDepartment,
-} = require("./utils/view");
+const { getDepartments, getRoles, getEmployees } = require("./utils/view");
 
-const {
-  departmentList,
-  roleList,
-  employeeList,
-  managerList,
-} = require("./utils/helpers");
+const { departmentList, roleList, employeeList } = require("./utils/helpers");
 
 const confirmAction = {
   name: "action",
