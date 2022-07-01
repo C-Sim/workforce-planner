@@ -21,6 +21,10 @@ const {
   departmentQuestions,
   roleCreationQuestions,
   employeeCreationQuestions,
+  chooseDepartment,
+  chooseRole,
+  chooseEmployee,
+  chooseManager,
 } = require("./questions");
 
 const { createDepartment, createRole, createEmployee } = require("./utils/add");
@@ -34,7 +38,7 @@ const {
   getSpendByDepartment,
 } = require("./utils/view");
 
-// const { updateEmployeeRole, updateEmployeeManager } = require("./utils/update");
+const { updateEmployeeRole, updateEmployeeManager } = require("./utils/update");
 
 const {
   deleteDepartment,
@@ -84,16 +88,16 @@ const init = async () => {
 
           console.table(employees);
         } else if (viewChoice.viewOptions === "viewEmployeesByManager") {
-          const managers = await getEmployees(db);
+          // const managers = await getEmployees(db);
 
-          const manager = await inquirer.prompt([
-            {
-              name: "manager",
-              type: "list",
-              message: "Which managers?",
-              choices: managerList(managers),
-            },
-          ]);
+          // const manager = await inquirer.prompt([
+          //   {
+          //     name: "manager",
+          //     type: "list",
+          //     message: "Which managers?",
+          //     choices: managerList(managers),
+          //   },
+          // ]);
 
           await getEmployeesByManager(db, manager);
         } else if (viewChoice.viewOptions === "viewEmployeesByDepartment") {
@@ -121,60 +125,33 @@ const init = async () => {
 
           createEmployee(db, employeeAnswers);
         }
-        // } else if (action === "update") {
-        //   const updateOption = await inquirer.prompt(updateOptions);
+      } else if (action === "update") {
+        const updateChoice = await inquirer.prompt(updateOptions);
 
-        //   if (updateOption === "updateEmployeeRole") {
-        //     const employee = await inquirer.prompt(chooseEmployee);
-        //     const role = await inquirer.prompt(chooseRole);
+        if (updateChoice.updateOptions === "updateEmployeeRole") {
+          const employee = await chooseEmployee(db);
+          const role = await chooseRole(db);
 
-        //     updateEmployeeRole(employee, role);
-        //   } else if (updateOption === "updateEmployeeManager") {
-        //     const employee = await inquirer.prompt(chooseEmployee);
-        //     const manager = await inquirer.prompt(chooseManager);
+          updateEmployeeRole(db, employee, role);
+        } else if (updateChoice.updateOptions === "updateEmployeeManager") {
+          const employee = await chooseEmployee(db);
+          const manager = await chooseManager(db);
 
-        //     updateEmployeeManager(employee, manager);
-        //   }
+          updateEmployeeManager(db, employee, manager);
+        }
       } else if (action === "delete") {
         const deleteChoice = await inquirer.prompt(deleteOptions);
 
         if (deleteChoice.deleteOptions === "deleteDepartment") {
-          const departments = await getDepartments(db);
-
-          const department = await inquirer.prompt([
-            {
-              name: "department",
-              type: "list",
-              message: "Which department?",
-              choices: departmentList(departments),
-            },
-          ]);
+          const department = await chooseDepartment(db);
 
           await deleteDepartment(db, department);
         } else if (deleteChoice.deleteOptions === "deleteRole") {
-          const roles = await getRoles(db);
-
-          const role = await inquirer.prompt([
-            {
-              name: "role",
-              type: "list",
-              message: "Which role?",
-              choices: roleList(roles),
-            },
-          ]);
+          const role = await chooseRole(db);
 
           await deleteRole(db, role);
         } else if (deleteChoice.deleteOptions === "deleteEmployee") {
-          const employees = await getEmployees(db);
-
-          const employee = await inquirer.prompt([
-            {
-              name: "employee",
-              type: "list",
-              message: "Which employee?",
-              choices: employeeList(employees),
-            },
-          ]);
+          const employee = await chooseEmployee(db);
 
           await deleteEmployee(db, employee);
         }

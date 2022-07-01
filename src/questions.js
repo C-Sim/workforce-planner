@@ -164,7 +164,6 @@ const departmentQuestions = [
   },
 ];
 
-// TODO - list choices from db - map through all retrieved?
 const roleCreationQuestions = async (db) => {
   const departments = await getDepartments(db);
 
@@ -207,7 +206,6 @@ const roleCreationQuestions = async (db) => {
   return roleAnswers;
 };
 
-// TODO - list choices from db - map through all retrieved?
 const employeeCreationQuestions = async (db) => {
   const employees = await getEmployees(db);
 
@@ -266,6 +264,66 @@ const employeeCreationQuestions = async (db) => {
   return employeeAnswers;
 };
 
+const chooseDepartment = async (db) => {
+  const departments = await getDepartments(db);
+
+  const department = await inquirer.prompt([
+    {
+      name: "department",
+      type: "list",
+      message: "Which department?",
+      choices: departmentList(departments),
+    },
+  ]);
+
+  return department;
+};
+
+const chooseRole = async (db) => {
+  const roles = await getRoles(db);
+
+  const role = await inquirer.prompt([
+    {
+      name: "role",
+      type: "list",
+      message: "Which role?",
+      choices: roleList(roles),
+    },
+  ]);
+
+  return role;
+};
+
+const chooseEmployee = async (db) => {
+  const employees = await getEmployees(db);
+
+  const employee = await inquirer.prompt([
+    {
+      name: "employee",
+      type: "list",
+      message: "Which employee?",
+      choices: employeeList(employees),
+    },
+  ]);
+
+  return employee;
+};
+
+const chooseManager = async (db) => {
+  const employees = await getEmployees(db);
+
+  const manager = await inquirer.prompt([
+    {
+      name: "manager",
+      type: "list",
+      message: "Which manager?",
+      choices: employeeList(employees),
+    },
+  ]);
+
+  return manager;
+};
+
 module.exports = {
   confirmAction,
   viewOptions,
@@ -275,4 +333,8 @@ module.exports = {
   departmentQuestions,
   roleCreationQuestions,
   employeeCreationQuestions,
+  chooseDepartment,
+  chooseRole,
+  chooseEmployee,
+  chooseManager,
 };
